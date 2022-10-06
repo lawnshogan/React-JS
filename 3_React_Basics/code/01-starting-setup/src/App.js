@@ -1,7 +1,10 @@
+import ExpenseItem from './components/ExpenseItem';
+
 function App() {
   return (
     <div>
-      <h2>Fuck you!</h2>
+      <h2>Lets get started!</h2>
+      <ExpenseItem></ExpenseItem>
     </div>
   );
 }
