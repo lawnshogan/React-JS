@@ -1,33 +1,45 @@
-import Expenses from './components/Expenses';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Main from "./containers/Main";
+import { ThemeProvider } from "styled-components";
+import { themes } from "./theme";
+import { GlobalStyles } from "./global";
+import { CursorProvider } from "react-cursor-custom";
+import { settings } from "./portfolio";
+import ReactGA from "react-ga";
 
 function App() {
-  const expenses = [
-    {
-      id: 'e1',
-      title: 'Toilet Paper',
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    { id: 'e2', title: 'New TV', amount: 799.49, date: new Date(2021, 2, 12) },
-    {
-      id: 'e3',
-      title: 'Car Insurance',
-      amount: 294.67,
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: 'e4',
-      title: 'New Desk (Wooden)',
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ];
+  useEffect(() => {
+    if (settings.googleTrackingID) {
+      ReactGA.initialize(settings.googleTrackingID, {
+        testMode: process.env.NODE_ENV === "test",
+      });
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+  }, []);
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const useCursor = settings.useCustomCursor;
 
   return (
-    <div>
-      <h2>Let's get started!</h2>
-      <Expenses items={expenses} />
-    </div>
+    <ThemeProvider theme={themes[theme]}>
+      <>
+        <GlobalStyles />
+        <div>
+          {useCursor ? (
+            <CursorProvider
+              color={themes[theme].secondaryText}
+              ringSize={25}
+              transitionTime={75}
+            >
+              <Main theme={themes[theme]} setTheme={setTheme} />
+            </CursorProvider>
+          ) : (
+            <Main theme={themes[theme]} setTheme={setTheme} />
+          )}
+        </div>
+      </>
+    </ThemeProvider>
   );
 }
 
