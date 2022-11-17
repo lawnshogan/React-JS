@@ -10,7 +10,7 @@ const ExpenseItem = (props) => {
   console.log('ExpenseItem evaluated by React');
   
   const clickHandler = () => {
-    setTitle('Updated!');
+    setTitle('Fuck you!');
     console.log(title);
   };
 
@@ -21,7 +21,7 @@ const ExpenseItem = (props) => {
         <h2>{title}</h2>
         <div className='expense-item__price'>${props.amount}</div>
       </div>
-      <button onClick={clickHandler}>Change Title</button>
+      <button onClick={clickHandler}>Change Title Bitch!</button>
     </Card>
   );
 }
